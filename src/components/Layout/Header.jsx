@@ -46,14 +46,15 @@ const Header = () => {
                         <motion.span
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
-                            className="text-2xl font-bold text-gray-900 hover:text-orange-500 transition-colors"
+                            className="text-2xl font-bold text-gray-900 hover:text-orange-500 transition-colors flex justify-center items-center"
                         >
-                            Spotly
+                            <img src="/assets/Images/location.png" alt="" className='w-10'/>
+                            <span>Spotly</span>
                         </motion.span>
                     </Link>
 
                     {/* Desktop Menu (789px और ऊपर) */}
-                    <div className="hidden min-[789px]:flex items-center space-x-6 lg:space-x-8">
+                    <div className="hidden min-[789px]:flex justify-center items-center space-x-3 lg:space-x-8">
                         {menuItems.map((item) => {
                             const isActive = location.pathname === item.path;
                             return (
@@ -65,8 +66,9 @@ const Header = () => {
                                 >
                                     <Link
                                         to={item.path}
-                                        className={`relative text-gray-700 hover:text-orange-500 transition-colors ${isActive ? 'text-orange-600' : ''
+                                        className={`relative text-gray-700 text-center font-semibold hover:text-orange-500 transition-colors ${isActive ? 'text-orange-600' : ''
                                             }`}
+                                            style={{fontSize : '16.5px'}}
                                     >
                                         {item.name}
                                         {isActive && (
@@ -93,7 +95,7 @@ const Header = () => {
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link
                                 to="/register"
-                                className="px-5 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors"
+                                className="px-4 py-2 rounded-lg bg-orange-500 text-white hover:bg-orange-600 transition-colors"
                             >
                                 Sign In
                             </Link>
@@ -101,7 +103,7 @@ const Header = () => {
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link
                                 to="/host"
-                                className="px-5 py-2 rounded-lg border-2 border-orange-500 text-orange-500 hover:bg-orange-50 transition-colors"
+                                className="px-4 py-2 rounded-lg border-2 border-orange-500 text-orange-500 hover:bg-orange-50 transition-colors"
                             >
                                 List Your Space
                             </Link>

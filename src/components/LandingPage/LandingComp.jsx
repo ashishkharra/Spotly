@@ -474,7 +474,7 @@ const Landing = () => {
                                         <div className="bg-white/5 p-8 rounded-2xl backdrop-blur-sm border border-white/10">
                                             <div className="flex flex-col md:flex-row items-center gap-8">
                                                 <img
-                                                    src={testimonial.avatar}
+                                                    src="../../../public/assets/Images/person1.jpg"
                                                     alt={testimonial.name}
                                                     className="w-24 h-24 rounded-full object-cover border-2 border-orange-500"
                                                 />

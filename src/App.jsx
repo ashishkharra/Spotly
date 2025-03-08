@@ -19,7 +19,7 @@ const App = () => {
       <ScrollTop/>
         <Header />
         <Routes>
-          <Route path="/Place-for-you-spotly-" element={<Home />} />
+          <Route path="/" element={<Home />} />
           <Route path='/register' element={<Register/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/find-parking' element={<FindParking/>}/>
