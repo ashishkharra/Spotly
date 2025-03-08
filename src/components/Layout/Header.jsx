@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
     const menuItems = [
-        { name: 'Home', path: '/' },
+        { name: 'Home', path: '/Spotly' },
         { name: 'Find Parking', path: '/find-parking' },
         { name: 'How It Works', path: '/how-it-works' },
         { name: 'About', path: '/about' },
