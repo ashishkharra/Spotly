@@ -48,7 +48,7 @@ const Header = () => {
                             animate={{ scale: 1 }}
                             className="text-2xl font-bold text-gray-900 hover:text-orange-500 transition-colors flex justify-center items-center"
                         >
-                            <img src="/assets/Images/location.png" alt="" className='w-10'/>
+                            <img src="dist/assets/Images/location.png" alt="" className='w-10'/>
                             <span>Spotly</span>
                         </motion.span>
                     </Link>
