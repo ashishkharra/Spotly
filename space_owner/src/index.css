@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@media (min-width : 768px) and (max-width : 858px) {
+    .dashboard-sidebar {
+        width: 25%;
+    }
+
+    .dashboard-main {
+        width: 75%;
+    }
+}
+
+@media (min-width : 859px) and (max-width : 1024px) {
+    .dashboard-sidebar {
+        width: 23%;
+    }
+
+    .dashboard-main {
+        width: 77%;
+    }
+}
+
+@media (max-width: 767px){
+    .toggle {
+        display: block;
+    }
+}
