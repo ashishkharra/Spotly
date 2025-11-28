@@ -29,51 +29,6 @@ module.exports = {
         }
     },
 
-    register: async (req, res) => {
-        try {
-            let { fullName, email, phone, password } = req.body;
-            const result = await userAuth.register(fullName, email, phone, password);
-            if (!result?.success) {
-                return res.json(result?.message, {}, req, result?.success || false)
-            }
-
-            return res.json(
-                responseData(result?.message, result?.results, req, result?.success || true)
-            );
-
-        } catch (error) {
-            console.error("Register error:", error.message);
-            return res.status(500).json(responseData("SERVER_ERROR", { error: error.message }, req, false));
-        }
-    },
-
-    login: async (req, res) => {
-        try {
-            const { email, password } = req.body;
-
-            const result = await userAuth.login(email, password, req);
-            return res.json(
-                responseData(result?.message, result?.results, req, result?.success || true)
-            );
-        } catch (error) {
-            console.error("Login error:", error.message);
-            return res.status(500).json(responseData("SERVER_ERROR", { error: error.message }, req, false));
-        }
-    },
-
-    OAuth: async (req, res) => {
-        try {
-            const { full_name, email } = req.body;
-            const result = await userAuth.OAuth(full_name, email, req);
-            return res.json(
-                responseData(result?.message, result?.results, req, result?.success || true)
-            );
-        } catch (error) {
-            console.error("Login error:", error.message);
-            return res.status(500).json(responseData("SERVER_ERROR", { error: error.message }, req, false));
-        }
-    },
-
     updateProfile: async (req, res) => {
         try {
             const userId = req.user?.id;

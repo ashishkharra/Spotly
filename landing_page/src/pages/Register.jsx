@@ -2,9 +2,14 @@ import { useState } from "react";
 import OAuth from "../components/OAuth";
 import { useNavigate } from 'react-router-dom'
 import { userAuth } from "../store/Store";
+import useAxios from "../hooks/useAxios";
+import Toast from "../components/Toast"
 
 const SignInUp = () => {
   const setUser = userAuth((state) => state.setUser);
+
+  const { sendRequest, loading, error } = useAxios();
+
   const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
   const [see, setSee] = useState(false);
@@ -45,13 +50,41 @@ const SignInUp = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+    try {
+      const signUpData = {
+        ...formData,
+        role
+      };
+      const res = await sendRequest("POST", "/register", signUpData)
+      if (!res.ok) {
+        navigate('/auth', {
+          state: {
+            showToast: true,
+            message: error.response?.data?.message || 'Google authentication failed!',
+            type: 'error'
+          }
+        });
+      }
+      
+      
+      navigate('/', {
+        state: {
+          showToast: true,
+          message: res?.data?.message,
+          type: 'success'
+        }
+      })
+    } catch (error) {
+      console.log('Register error : ', error)
+      navigate('/auth', {
+        state: {
+          showToast: true,
+          message: error.response?.data?.message || 'Google authentication failed!',
+          type: 'error'
+        }
+      });
+    }
 
-    const signUpData = {
-      ...formData,
-      role
-    };
-
-    
   };
 
   return (

@@ -27,7 +27,7 @@ const AppContent = () => {
       <Suspense fallback={<div className='min-h-screen flex justify-center items-center'><Loading /></div>}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/auth" element={<Register />} />
           <Route path="/profile" element={<Protected><Profile /></Protected>} />
           <Route path="/find-parking" element={<FindParking />} />
           <Route path="/how-it-works" element={<HowItWork />} />

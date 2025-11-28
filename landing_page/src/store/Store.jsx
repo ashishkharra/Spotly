@@ -4,11 +4,11 @@ import { persist } from 'zustand/middleware';
 export const userAuth = create(persist(
   (set) => ({
     user: null,
-    setUser: (user) => set({ user: user.id }),
-    clearUser: () => set({ user: null }),
+    setUser: (token) => set({ token: token }),
+    clearUser: () => set({ token: null }),
     clearStorage: () => {
       localStorage.removeItem('user-auth');
-      set({ user: null });
+      set({ token: null });
     },
   }),
   {
