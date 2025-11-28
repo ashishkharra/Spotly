@@ -1,7 +1,7 @@
 import { useState } from "react";
-import OAuth from "../components/OAuth/OAuth";
+import OAuth from "../components/OAuth";
 import { useNavigate } from 'react-router-dom'
-import { userAuth } from "../components/Store";
+import { userAuth } from "../store/Store";
 
 const SignInUp = () => {
   const setUser = userAuth((state) => state.setUser);
@@ -9,7 +9,7 @@ const SignInUp = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [see, setSee] = useState(false);
 
-  const [role, setRole] = useState("user"); // 👈 NEW — role state
+  const [role, setRole] = useState("user");
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -36,7 +36,7 @@ const SignInUp = () => {
     const signInData = {
       email: formData.email,
       password: formData.password,
-      role           // 👈 send role to backend
+      role
     };
 
     console.log("SIGN IN AS:", role, signInData);
@@ -48,10 +48,10 @@ const SignInUp = () => {
 
     const signUpData = {
       ...formData,
-      role            // 👈 send role to backend
+      role
     };
 
-    console.log("SIGN UP AS:", role, signUpData);
+    
   };
 
   return (

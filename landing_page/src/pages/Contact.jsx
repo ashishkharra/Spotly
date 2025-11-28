@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Clock } from "react-feather";
 
-const ContactUsComp = () => {
+function Contact() {
   return (
-    <div className="bg-gray-50">
+        <div className="bg-gray-50">
       <section className="bg-gradient-to-b from-gray-900 to-orange-900 pt-32 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -181,7 +181,7 @@ const ContactUsComp = () => {
         </motion.div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default ContactUsComp;
+export default Contact

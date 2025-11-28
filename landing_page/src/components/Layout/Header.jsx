@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import { Link, useLocation } from 'react-router-dom';
-import { userAuth } from "../Store";
+import { userAuth } from "../../store/Store";
 
 const Header = () => {
     const user = userAuth((state) => state.user);

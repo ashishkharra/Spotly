@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle, MapPin, Clock, DollarSign, Info, Upload, Shield, Calendar, Star } from "react-feather";
 
-const ListYourSpace = () => {
+const ListSpace = () => {
     return (
         <div className="bg-gray-50">
             {/* Existing Hero Section */}
@@ -559,6 +559,6 @@ const ListYourSpace = () => {
             </section>
         </div>
     );
-};
+}
 
-export default ListYourSpace;
+export default ListSpace

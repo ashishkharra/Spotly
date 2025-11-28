@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { userAuth } from './Store';
+import { userAuth } from '../store/Store';
 
 const Protected = ({ children }) => {
   const user = userAuth(state => state.user);

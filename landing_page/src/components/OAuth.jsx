@@ -1,8 +1,8 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
-import app from '/public/assets/JS/firebase'
+import app from '../config/firebase'
 // import { OAuthSignIn } from '../../APIs/postApis'
-import { userAuth } from '../Store'
+import { userAuth } from '../store/Store.jsx'
 
 const OAuth = ({ para }) => {
   const setUser = userAuth((state) => state.setUser);
