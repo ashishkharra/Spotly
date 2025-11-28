@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { profileData } from "../../constants/constans";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import Loading from "../Loading";
+import Loading from "../components/Loading.jsx";
 import { userAuth } from "../Store";
-import Toast from '../Toast.jsx'
+import Toast from '../components/Toast.jsx'
 import { getProfile, getVehicles } from "../../APIs/getApis.js";
 import { signOut } from "../../APIs/getApis.js";
 

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { Home, Users, Award, MapPin } from "react-feather";
+import { Home, Users, MapPin } from "react-feather";
 
-const AboutComp = () => {
+function About() {
   return (
     <div className="bg-gray-50">
       <section className="bg-gradient-to-b from-gray-900 to-orange-900 pt-32 pb-24">
@@ -10,13 +10,13 @@ const AboutComp = () => {
           animate={{ opacity: 1, y: 0 }}
           className="max-w-7xl mx-auto px-4 lg:px-8 text-center"
         >
-          <motion.h1 
+          <motion.h1
             className="text-4xl md:text-5xl font-bold text-white mb-6"
             transition={{ delay: 0.2 }}
           >
             Revolutionizing Urban Mobility
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-xl text-orange-200 max-w-2xl mx-auto"
             transition={{ delay: 0.4 }}
           >
@@ -33,14 +33,14 @@ const AboutComp = () => {
             viewport={{ once: true }}
             className="grid lg:grid-cols-2 gap-12 items-center"
           >
-            <motion.div 
+            <motion.div
               className="bg-white p-8 rounded-2xl shadow-lg"
               initial={{ x: -100 }}
               whileInView={{ x: 0 }}
             >
               <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
               <p className="text-gray-600 mb-8">
-                To transform urban landscapes through intelligent parking solutions 
+                To transform urban landscapes through intelligent parking solutions
                 that reduce congestion, lower emissions, and improve quality of life.
               </p>
               <div className="space-y-4">
@@ -55,14 +55,14 @@ const AboutComp = () => {
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="bg-gray-100 rounded-2xl overflow-hidden"
               initial={{ scale: 0.9 }}
               whileInView={{ scale: 1 }}
             >
-              <img 
-                src="/assets/Images/city.jpg" 
-                alt="City coverage" 
+              <img
+                src="/assets/Images/city.jpg"
+                alt="City coverage"
                 className="w-full h-full object-cover"
               />
             </motion.div>
@@ -72,17 +72,17 @@ const AboutComp = () => {
 
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <motion.h2 
+          <motion.h2
             className="text-3xl font-bold text-center mb-16"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
           >
             Our Journey
           </motion.h2>
-          
+
           <div className="relative pl-8 lg:pl-0">
             <div className="hidden lg:block absolute left-1/2 w-1 h-full bg-gray-200" />
-            
+
             {[
               { year: "2018", title: "Company Founded", text: "Started with 3 parking lots in San Francisco" },
               { year: "2020", title: "Mobile App Launch", text: "Introduced real-time parking reservations" },
@@ -139,14 +139,14 @@ const AboutComp = () => {
 
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <motion.h2 
+          <motion.h2
             className="text-3xl font-bold text-center mb-16"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
           >
             Meet The Team
           </motion.h2>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { name: "Sarah Johnson", role: "CEO & Founder", photo: "/assets/Images/person1.jpg" },
@@ -161,8 +161,8 @@ const AboutComp = () => {
                 className="text-center"
               >
                 <div className="w-full aspect-square bg-gray-100 rounded-2xl overflow-hidden mb-4 border border-gray-100">
-                  <img 
-                    src={member.photo} 
+                  <img
+                    src={member.photo}
                     alt={member.name}
                     className="w-full h-full object-cover hover:scale-105 transition"
                   />
@@ -175,7 +175,7 @@ const AboutComp = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default AboutComp;
+export default About

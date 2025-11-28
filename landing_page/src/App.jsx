@@ -9,7 +9,7 @@ import Protected from './components/Protected.jsx';
 
 const Home = lazy(() => import('./pages/Home.jsx'));
 const Register = lazy(() => import('./pages/Register.jsx'));
-const Profile = lazy(() => import('./components/Profile/Profile.jsx'));
+const Profile = lazy(() => import('./pages/Profile.jsx'));
 const FindParking = lazy(() => import('./pages/FindParking.jsx'));
 const HowItWork = lazy(() => import('./pages/HowItWork.jsx'));
 const About = lazy(() => import('./pages/About.jsx'));

@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Search, CreditCard, MapPin, CheckCircle } from "react-feather";
 
-// Animation variants
 const fadeIn = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.6 } }
@@ -16,7 +15,7 @@ const staggerChildren = {
   visible: { transition: { staggerChildren: 0.2 } }
 };
 
-const Working = () => {
+const HowItWork = () => {
   const steps = [
     {
       icon: <Search size={40} className="text-orange-500" />,
@@ -201,6 +200,6 @@ const Working = () => {
       </section>
     </div>
   );
-};
+}
 
-export default Working;
+export default HowItWork
