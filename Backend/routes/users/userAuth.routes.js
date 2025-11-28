@@ -8,10 +8,7 @@ const userController = require('../../controllers/users/userAuth.controller.js')
 router.get('/get-profile', [verifyToken], userController.getProfile)
 
 // POST AUTH ROUTES
-    .post('/sign-out', [verifyToken], userController.logout)
-    .post('/sign-up', [validationRule.validate('register')], userController.signUp)
-    .post('/sign-in', [validationRule.validate('login')], userController.signIn)
-    .post('/google-auth',[validationRule.validate('OAuth')], userController.OAuth)
+    .post('/logout', [verifyToken], userController.logout)
     .put('/update-profile', [verifyToken, userDoc, validationRule.validate('updateProfile')], userController.updateProfile)
     .post('/forgot-password', [validationRule.validate('forgot-password')], userController.userForgotPassword)
     .post('/reset-password/:token', [validationRule.validate('reset-password')], userController.userResetPassword)

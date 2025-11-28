@@ -5,7 +5,19 @@ const userSchema = new mongoose.Schema(
   {
     full_name: { type: String, required: true, trim: true },
 
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    email: { 
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true
+    },
+
+    contact: {
+      type: String,
+      unique: true,
+      sparse: true
+    },
 
     password: { type: String, required: true, minlength: 6 },
 
@@ -23,9 +35,7 @@ const userSchema = new mongoose.Schema(
 
     region: { type: String },
 
-    contact: { type: String, default: "XXX-XXX-XXXX" },
-
-    tokenVersion: { type: Number, default: 0 } 
+    tokenVersion: { type: Number, default: 0 }
   },
   {
     timestamps: true,
@@ -33,6 +43,10 @@ const userSchema = new mongoose.Schema(
     toObject: { getters: true }
   }
 );
+
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ contact: 1 }, { unique: true, sparse: true });
+
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

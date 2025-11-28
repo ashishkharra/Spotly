@@ -5,11 +5,17 @@ const ownerSchema = new mongoose.Schema(
   {
     full_name: { type: String, required: true, trim: true },
 
-    email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+    email: { 
+      type: String, 
+      required: true, 
+      unique: true, 
+      lowercase: true, 
+      trim: true,
+    },
 
     password: { type: String, required: true, minlength: 6 },
 
-    role: { type: String, enum: ["landlord"], default: "landlord" },
+    role: { type: String, enum: ["user"], default: "user" },
 
     status: { type: String, enum: ["active", "inactive"], default: "active" },
 
@@ -23,9 +29,12 @@ const ownerSchema = new mongoose.Schema(
 
     region: { type: String },
 
-    contact: { type: String, default: "XXX-XXX-XXXX" },
+    contact: { 
+      type: String, 
+      default: "XXX-XXX-XXXX", 
+    },
 
-    tokenVersion: { type: Number, default: 0 } 
+    tokenVersion: { type: Number, default: 0 }
   },
   {
     timestamps: true,
@@ -39,5 +48,8 @@ ownerSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
+
+ownerSchema.index({ email: 1 }, { unique: true });
+ownerSchema.index({ contact: 1 }, { unique: true, sparse: true });
 
 module.exports = mongoose.model("Owner", ownerSchema);

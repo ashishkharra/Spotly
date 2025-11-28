@@ -9,6 +9,9 @@ const http = require('http')
 const server = http.createServer(app)
 db.initialize()
 
+// ROLE AUTH
+const roleAuthRoutes = require('./routes/role_based/auth.route.js')
+
 // USER ROUTES
 const userRoutes = require('./routes/users/userAuth.routes.js')
 
@@ -31,7 +34,7 @@ app
   .use(morgan('dev'))
   .use(
     require('express-session')({
-      secret: 'keyboard cat',
+      secret: process.env.SESSION_SECRET,
       resave: false,
       saveUninitialized: false
     })
@@ -42,11 +45,14 @@ app
   .use(express.static('public'))
   .use(express.static(path.join(__dirname, 'public')))
 
+  // Role Routes
+  .use('/v1/api', roleAuthRoutes)
   // Admin Routes
   // Space Owner Routes
-  .use('/v1/landlord', spaceOwnerRoutes)
+  .use('/v1/api/owner', spaceOwnerRoutes)
   // User Routes
-  .use('/v1/user', userRoutes)
+  .use('/v1/api/user', userRoutes)
+
   .use(function (req, res) {
     res.status(404).json({
       status: 404,

@@ -23,7 +23,7 @@ const OAuth = ({ para }) => {
   //       setUser(res.data?.user);
   //       navigate('/', {
   //         state: {
-  //           showToast: true,
+  //           show: true,
   //           message: `Successfully ${para ? 'signed up' : 'signed in'} with Google! Also, go to profile to update your phone number.`,
   //           type: 'success'
   //         }

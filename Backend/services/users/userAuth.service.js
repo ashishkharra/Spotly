@@ -1,45 +1,8 @@
 const bcrypt = require('bcryptjs')
-const { generateAuthToken } = require('../../helpers/responseData.js')
 const User = require('../../models/user/user.schema.js');
 const RefreshToken = require('../../models/token/refreshToken.schema.js')
-const { generateSecurePassword, buildResponse, cleanObject } = require('../../helpers/helper.js');
+const { cleanObject } = require('../../helpers/helper.js');
 module.exports = {
-
-    login: async (email, password, req) => {
-        try {
-            const user = await User.findOne({ email });
-
-            if (!user || user.isRemoved === 1) {
-                return { success: false, message: "USER_NOT_FOUND", results: {} };
-            }
-
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return { success: false, message: "INVALID_CREDENTIALS", results: {} };
-            }
-
-            const payload = {
-                id: user._id,
-                role: user.role,
-                tokenVersion: user.tokenVersion
-            };
-
-            const tokens = await generateAuthToken(payload, req);
-
-            return {
-                success: true,
-                message: `${user.role.toUpperCase()}_LOGIN_SUCCESS`,
-                results: {
-                    ...tokens,
-                    role: user.role
-                }
-            };
-
-        } catch (err) {
-            console.error(err);
-            return { success: false, message: "SERVER_ERROR", results: {} };
-        }
-    },
 
     logout: async (userId, refreshTokenPlain) => {
         try {
@@ -61,67 +24,7 @@ module.exports = {
         }
     },
 
-    register: async (full_name, email, phone, password) => {
-        try {
-            const existingUser = await User.findOne({ email, phone });
-            if (existingUser) {
-                return {
-                    success: true,
-                    message: "USER_ALREADY_EXISTS",
-                    results: existingUser
-                };
-            }
-            const hashedPassword = await bcrypt.hash(password, 12)
-            const newUser = await User.create({
-                full_name,
-                email,
-                contact: phone,
-                password: hashedPassword,
-            });
 
-            return {
-                success: true,
-                message: "USER_REGISTERED_SUCCESSFULLY",
-                results: newUser,
-            };
-        } catch (error) {
-            console.error("Signup Error:", error);
-            return {
-                success: false,
-                message: "SERVER_ERROR",
-                error: error.message,
-            };
-        }
-    },
-
-    OAuth: async (full_name, email, req) => {
-        try {
-            const existingUser = await User.findOne({ email, phone });
-
-            if (existingUser) {
-                return buildResponse(existingUser, "USER_ALREADY_EXISTS", req);
-            }
-
-            const hashedPassword = await bcrypt.hash(generateSecurePassword(), 12);
-
-            const newUser = await User.create({
-                full_name,
-                email,
-                contact: phone,
-                password: hashedPassword,
-            });
-
-            return buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req);
-
-        } catch (error) {
-            console.error("Signup Error:", error);
-            return {
-                success: false,
-                message: "SERVER_ERROR",
-                error: error.message,
-            };
-        }
-    },
 
     getProfile: async (userId) => {
         try {

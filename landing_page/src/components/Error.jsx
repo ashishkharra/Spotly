@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -19,11 +19,10 @@ const Error = () => {
   return (
     <div className="relative w-full h-screen flex items-center justify-center bg-black overflow-hidden">
       {/* <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-contain"
         src="/assets/videos/errorVd.mp4"
         autoPlay
         loop
-        muted
       ></video> */}
 
       <div className="absolute top-0 left-0 w-full h-full bg-black/50"></div>
