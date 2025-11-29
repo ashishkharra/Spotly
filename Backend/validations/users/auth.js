@@ -34,7 +34,7 @@ module.exports.validate = (method) => {
     }
     case 'OAuth': {
       return [
-        body('full_name')
+        body('fullName')
           .optional()
           .trim()
           .withMessage('USERNAME_REQUIRED')
@@ -71,7 +71,7 @@ module.exports.validate = (method) => {
     }
     case 'register': {
       return [
-        body('full_name')
+        body('fullName')
           .notEmpty()
           .trim()
           .withMessage('USERNAME_REQUIRED')
@@ -230,7 +230,7 @@ module.exports.validate = (method) => {
     }
     case 'updateProfile': {
       return [
-        body('full_name')
+        body('fullName')
           .optional()
           .trim()
           .isLength({ min: 2 })

@@ -63,8 +63,8 @@ module.exports = {
 
     OAuth: async (req, res) => {
         try {
-            const { full_name, email } = req.body;
-            const result = await ownerService.OAuth(full_name, email, req);
+            const { fullName, email } = req.body;
+            const result = await ownerService.OAuth(fullName, email, req);
             return res.json(
                 responseData(result?.message, result?.results, req, result?.success || true)
             );

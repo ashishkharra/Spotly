@@ -61,7 +61,7 @@ module.exports = {
         }
     },
 
-    register: async (full_name, email, phone, password) => {
+    register: async (fullName, email, phone, password) => {
         try {
             const existingOwner = await Owner.findOne({ email, phone });
             if (existingOwner) {
@@ -73,7 +73,7 @@ module.exports = {
             }
             const hashedPassword = await bcrypt.hash(password, 12)
             const newOwner = await Owner.create({
-                full_name,
+                fullName,
                 email,
                 contact: phone,
                 password: hashedPassword,
@@ -94,7 +94,7 @@ module.exports = {
         }
     },
 
-    OAuth: async (full_name, email, req) => {
+    OAuth: async (fullName, email, req) => {
         try {
             const existingOwner = await Owner.findOne({ email, phone });
 
@@ -105,7 +105,7 @@ module.exports = {
             const hashedPassword = await bcrypt.hash(generateSecurePassword(), 12);
 
             const newOwner = await Owner.create({
-                full_name,
+                fullName,
                 email,
                 contact: phone,
                 password: hashedPassword,

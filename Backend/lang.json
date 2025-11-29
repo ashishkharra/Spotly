@@ -31,10 +31,6 @@
     "en": "Invalid status.",
     "ar": ""
   },
-  "NAME_EMPTY": {
-    "en": "Please enter name.",
-    "al": ""
-  },
   "TITLE_EMPTY": {
     "en": "Please enter title.",
     "al": ""
@@ -971,12 +967,15 @@
     "en": "Duration is required.",
     "ar": ""
   },
-  "PRICE_EMPTY": {
-    "en": "Price is required.",
-    "ar": ""
-  },
   "MONTHS_EMPTY": {
     "en": "Number of months is required.",
     "ar": ""
-  }
+  },
+
+  "SERVER_ERROR": { "en" : "Server error" },
+  "USER_LOGIN_SUCCESS": { "en" : "User login successfully" },
+  "INVALID_CREDENTIALS": { "en" : "Invalid credentials" },
+  "USER_ALREADY_EXISTS": { "en": "User already exists" },
+  "INVALID_ROLE": { "en" : "Invalid role" },
+  "USER_REGISTERED_SUCCESSFULLY": { "en" : "User registered successfully" }
 }

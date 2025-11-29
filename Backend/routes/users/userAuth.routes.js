@@ -10,8 +10,8 @@ router.get('/get-profile', [verifyToken], userController.getProfile)
 // POST AUTH ROUTES
     .post('/logout', [verifyToken], userController.logout)
     .put('/update-profile', [verifyToken, userDoc, validationRule.validate('updateProfile')], userController.updateProfile)
-    .post('/forgot-password', [validationRule.validate('forgot-password')], userController.userForgotPassword)
-    .post('/reset-password/:token', [validationRule.validate('reset-password')], userController.userResetPassword)
+    // .post('/forgot-password', [validationRule.validate('forgot-password')], userController.userForgotPassword)
+    // .post('/reset-password/:token', [validationRule.validate('reset-password')], userController.userResetPassword)
     .post('/change-password', [verifyToken, validationRule.validate('change-password')], userController.changePassword)
 
 // POST VEHICLE ROUTES

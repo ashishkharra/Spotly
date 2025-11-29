@@ -7,7 +7,7 @@ const imageMime = [
   'image/webp',
   'image/jpg'
 ]
-const docMime = ['application/pdf']
+// const docMime = ['application/pdf']
 
 const userProfile = createUploader({
   folderName: 'user',
@@ -22,9 +22,9 @@ const ownerProfile = createUploader({
 })
 
 
-const adminDoc = uploadProfilePics.fields([
-  { name: 'profilePic', maxCount: 1 }
-])
+// const adminDoc = uploadProfilePics.fields([
+//   { name: 'profilePic', maxCount: 1 }
+// ])
 
 const userDoc = userProfile.fields([
   { name: 'profilePic', maxCount: 1 }
