@@ -66,7 +66,7 @@ const Profile = () => {
 
   const [ownerData, setOwnerData] = useState({
     personal: {
-      full_name: '',
+      fullName: '',
       email: '',
       phone: '',
       profile_image_url: null,
@@ -255,11 +255,11 @@ const Profile = () => {
                   {ownerData?.personal?.profile_image_url ? (
                     <img src={ownerData?.personal?.profile_image_url} alt="Profile" className="w-full h-full rounded-full object-cover" />
                   ) : (
-                    <span>{ownerData.personal.full_name.charAt(0)}</span>
+                    <span>{ownerData.personal.fullName.charAt(0)}</span>
                   )}
                 </MotionDiv>
 
-                <h2 className="text-xl font-bold text-gray-800">{ownerData.personal.full_name}</h2>
+                <h2 className="text-xl font-bold text-gray-800">{ownerData.personal.fullName}</h2>
                 <p className="text-gray-600 flex items-center mt-1">
                   <FiMail className="mr-2" />
                   {ownerData.personal.email}
@@ -400,13 +400,13 @@ const Profile = () => {
                     {isEditing ? (
                       <input
                         type="text"
-                        name="full_name"
-                        value={ownerData.personal.full_name}
+                        name="fullName"
+                        value={ownerData.personal.fullName}
                         onChange={(e) => handleInputChange('personal', e)}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     ) : (
-                      <MotionDiv className="p-3 bg-gray-50 rounded-lg">{ownerData.personal.full_name}</MotionDiv>
+                      <MotionDiv className="p-3 bg-gray-50 rounded-lg">{ownerData.personal.fullName}</MotionDiv>
                     )}
                   </MotionDiv>
 
@@ -476,7 +476,7 @@ const Profile = () => {
                         {ownerData.personal.profile_image_url ? (
                           <img src={ownerData.personal.profile_image_url} name="profile_img_url" alt="Profile" className="w-full h-full rounded-full object-cover" />
                         ) : (
-                          <span>{ownerData.personal.full_name.charAt(0)}</span>
+                          <span>{ownerData.personal.fullName.charAt(0)}</span>
                         )}
                       </MotionDiv>
                       {isEditing && (

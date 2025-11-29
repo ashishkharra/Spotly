@@ -1,0 +1,14 @@
+{
+  "USERNAME_REQUIRED": "Full Name is required",
+  "FULLNAME_MIN_LENGTH_3": "Full Name must be at least 3 characters",
+  "EMAIL_REQUIRED": "Email is required",
+  "EMAIL_INVALID": "Email is invalid",
+  "MOBILE_REQUIRED": "Phone number is required",
+  "MOBILE_INVALID_FORMAT": "Phone must be in +CC XXX XXX... format with valid length",
+  "PASSWORD_REQUIRED": "Password is required",
+  "PASSWORD_MIN_LENGTH_6": "Password must be at least 6 characters",
+  "PASSWORD_NEEDS_LOWERCASE": "Password must contain a lowercase letter",
+  "PASSWORD_NEEDS_UPPERCASE": "Password must contain an uppercase letter",
+  "PASSWORD_NEEDS_NUMBER": "Password must contain a number",
+  "PASSWORD_NEEDS_SPECIAL_CHAR": "Password must contain a special character"
+}

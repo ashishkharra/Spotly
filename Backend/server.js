@@ -2,12 +2,12 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
-const db = require('./models/index')
+const connectDB = require('./configs/db.js')
 const path = require('path')
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-db.initialize()
+
 
 // ROLE AUTH
 const roleAuthRoutes = require('./routes/role_based/auth.route.js')
@@ -61,6 +61,8 @@ app
     })
   })
 
+
+connectDB()
 server.listen(process.env.PORT, () => {
   console.log('Server is running at PORT', process.env.PORT)
 })

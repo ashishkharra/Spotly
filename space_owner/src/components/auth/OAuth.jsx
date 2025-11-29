@@ -19,7 +19,7 @@ const OAuth = ({ para }) => {
       const result = await signInWithPopup(auth, provider);
       console.log('Google Sign In Result:', result);
        const authData = {
-        full_name: result.user.displayName,
+        fullName: result.user.displayName,
         email: result.user.email,
        }
 

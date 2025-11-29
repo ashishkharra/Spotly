@@ -13,7 +13,7 @@ const OAuth = ({ para }) => {
   //     const auth = getAuth(app);
   //     const result = await signInWithPopup(auth, provider);
   //      const authData = {
-  //       full_name: result.user.displayName,
+  //       fullName: result.user.displayName,
   //       email: result.user.email,
   //      }
 

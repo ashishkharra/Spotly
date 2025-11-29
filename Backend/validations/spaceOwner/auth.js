@@ -135,7 +135,7 @@ module.exports.validate = (method) => {
     }
     case 'updateProfile': {
       return [
-        body('full_name')
+        body('fullName')
           .optional()
           .trim()
           .isLength({ min: 2 })

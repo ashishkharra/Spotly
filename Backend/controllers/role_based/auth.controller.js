@@ -6,11 +6,14 @@ module.exports = {
         try {
             let { fullName, email, phone, password } = req.body;
             const result = await register(fullName, email, phone, password);
+
             if (!result?.success) {
-                return res.json(result?.message, result?.results, req, result?.success || false)
+                return res.status(result?.statusCode).json(
+                    responseData(result?.message, result?.results, req, result?.success || false)
+                );
             }
 
-            return res.json(
+            return res.status(result?.statusCode).json(
                 responseData(result?.message, result?.results, req, result?.success || true)
             );
 
@@ -23,10 +26,17 @@ module.exports = {
     login: async (req, res) => {
         try {
             const { email, password } = req.body;
+            console.log('login body ->>>> ', req.body)
 
             const result = await login(email, password, req);
-            return res.json(
-                responseData(result?.message, result?.results, req, result?.success || true)
+
+            if (!result?.success) {
+                return res.status(401).json(
+                    responseData(result?.message, result?.results, req, result?.success || false)
+                );
+            }
+            return res.status(result?.statusCode).json(
+                responseData(result?.message, result?.results, req, result?.success || false)
             );
         } catch (error) {
             console.error("Login error:", error.message);
@@ -36,9 +46,13 @@ module.exports = {
 
     OAuth: async (req, res) => {
         try {
-            const { full_name, email } = req.body;
-            const result = await OAuth(full_name, email, req);
-            return res.json(
+            const { fullName, email } = req.body;
+            const result = await OAuth(fullName, email, req);
+
+            if (!result?.success) {
+                return res.status(result?.statusCode).json(responseData(result?.message, result?.results, req, result?.success || false))
+            }
+            return res.status(result?.statusCode).json(
                 responseData(result?.message, result?.results, req, result?.success || true)
             );
         } catch (error) {

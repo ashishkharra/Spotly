@@ -159,7 +159,7 @@ const Profile = () => {
         e.preventDefault();
         try {
             const res = await axios.post('/api/update-profile', {
-                full_name: formData.full_name,
+                fullName: formData.fullName,
                 email: formData.email,
                 phone: formData.phone
             }, {
@@ -325,8 +325,8 @@ const Profile = () => {
                                 <label className="text-gray-700 text-sm block font-medium mb-2">Full Name</label>
                                 <input
                                     type="text"
-                                    name="full_name"
-                                    value={formData.full_name}
+                                    name="fullName"
+                                    value={formData.fullName}
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:border-transparent focus:ring-2 focus:ring-indigo-500 px-4 py-3"
                                 />
@@ -495,7 +495,7 @@ const Profile = () => {
                     <div className="bg-gradient-to-r p-6 text-white from-orange-600 sm:p-8 to-orange-800">
                         <div className="flex flex-col justify-between gap-6 items-start md:flex-row">
                             <div className="flex-1">
-                                <h1 className="text-2xl font-bold sm:text-3xl tracking-tight">{user.full_name}</h1>
+                                <h1 className="text-2xl font-bold sm:text-3xl tracking-tight">{user.fullName}</h1>
                                 <div className="mt-3 space-y-1">
                                     <p className="flex gap-2 items-center">
                                         <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

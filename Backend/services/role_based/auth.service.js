@@ -9,14 +9,26 @@ module.exports = {
     login: async (email, password, req) => {
         try {
             const user = await User.findOne({ email }) || await Owner.findOne({ email });
+            console.log('User ->>>> ',user)
 
             if (!user || user.isRemoved === 1) {
-                return { success: false, message: "USER_NOT_FOUND", results: {} };
+                return { 
+                    success: false, 
+                    statusCode: 404,
+                    message: "USER_NOT_FOUND", 
+                    results: {} 
+                };
             }
 
             const isMatch = await bcrypt.compare(password, user.password);
+            console.log('Password match _>>>>>> ', isMatch)
             if (!isMatch) {
-                return { success: false, message: "INVALID_CREDENTIALS", results: {} };
+                return { 
+                    success: false, 
+                    statusCode: 401,
+                    message: "INVALID_CREDENTIALS", 
+                    results: {} 
+                };
             }
 
             const payload = {
@@ -29,6 +41,7 @@ module.exports = {
 
             return {
                 success: true,
+                statusCode: 200,
                 message: `${user.role.toUpperCase()}_LOGIN_SUCCESS`,
                 results: {
                     ...tokens,
@@ -37,57 +50,74 @@ module.exports = {
             };
 
         } catch (error) {
-            console.error('Login error : ',error);
-            return { success: false, message: "SERVER_ERROR", results: error.message };
+            console.error('Login error : ', error);
+            return { 
+                success: false, 
+                statusCode: 500,
+                message: "SERVER_ERROR", 
+                results: error.message 
+            };
         }
     },
 
-    register: async (full_name, email, phone, password, role = "user") => {
+    register: async (fullName, email, phone, password, role = "user") => {
         try {
             if (!["user", "owner"].includes(role)) {
-                return { success: false, message: "INVALID_ROLE", results: {} };
+                return { 
+                    success: false, 
+                    statusCode: 400,
+                    message: "INVALID_ROLE", 
+                    results: {} 
+                };
             }
 
             const Model = role === "owner" ? Owner : User;
 
-            const existingUser = await Model.findOne({ email });
+            const existingUser = await Model.findOne({ email, contact: phone });
             if (existingUser) {
                 return {
                     success: false,
+                    statusCode: 409,
                     message: "USER_ALREADY_EXISTS",
-                    results: existingUser
+                    results: {}
                 };
             }
 
-            const hashedPassword = await bcrypt.hash(password, 12);
-
-            const newUser = await Model.create({
-                full_name,
+            await Model.create({
+                fullName,
                 email,
                 contact: phone,
-                password: hashedPassword,
+                password,
                 role
             });
 
             return {
                 success: true,
+                statusCode: 201,
                 message: "USER_REGISTERED_SUCCESSFULLY",
-                results: newUser
+                results: {}
             };
+
         } catch (error) {
             console.error("Register Error:", error);
             return {
                 success: false,
+                statusCode: 500,
                 message: "SERVER_ERROR",
                 results: error.message
             };
         }
     },
 
-    OAuth: async (full_name, email, role = "user", req) => {
+    OAuth: async (fullName, email, role = "user", req) => {
         try {
             if (!["user", "owner"].includes(role)) {
-                return { success: false, message: "INVALID_ROLE", results: {} };
+                return { 
+                    success: false, 
+                    statusCode: 400,
+                    message: "INVALID_ROLE", 
+                    results: {} 
+                };
             }
 
             const Model = role === "owner" ? Owner : User;
@@ -95,24 +125,31 @@ module.exports = {
             let existingUser = await Model.findOne({ email });
 
             if (existingUser) {
-                return buildResponse(existingUser, "USER_ALREADY_EXISTS", req);
+                return {
+                    ...buildResponse(existingUser, "USER_ALREADY_EXISTS", req),
+                    statusCode: 409
+                };
             }
 
-            const hashedPassword = await bcrypt.hash(generateSecurePassword(), 12);
+            const generatedPassword = generateSecurePassword()
 
             const newUser = await Model.create({
-                full_name,
+                fullName,
                 email,
-                password: hashedPassword,
+                password: generatedPassword,
                 role
             });
 
-            return buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req);
+            return {
+                ...buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req),
+                statusCode: 201
+            };
 
         } catch (error) {
             console.error("OAuth Error:", error);
             return {
                 success: false,
+                statusCode: 500,
                 message: "SERVER_ERROR",
                 results: error.message
             };
