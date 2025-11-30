@@ -13,6 +13,11 @@ export const registerValidationSchema = Yup.object().shape({
     .required(messages.EMAIL_REQUIRED)
     .email(messages.EMAIL_INVALID),
 
+  role: Yup.string()
+    .trim()
+    .required(messages.ROLE_REQUIRED)
+    .min(3, messages.ROLE_MIN_LENGTH_3),
+
   phone: Yup.string()
     .trim()
     .required('MOBILE_REQUIRED')
@@ -37,6 +42,11 @@ export const signInValidationSchema = Yup.object().shape({
     .required(messages.EMAIL_REQUIRED)
     .email(messages.EMAIL_INVALID),
 
+  role: Yup.string()
+    .trim()
+    .required(messages.ROLE_REQUIRED)
+    .min(3, messages.ROLE_MIN_LENGTH_3),
+
   password: Yup.string()
     .trim()
     .required(messages.PASSWORD_REQUIRED)
@@ -46,3 +56,21 @@ export const signInValidationSchema = Yup.object().shape({
     .matches(/\d/, messages.PASSWORD_NEEDS_NUMBER)
     .matches(/[@$!%*?&]/, messages.PASSWORD_NEEDS_SPECIAL_CHAR)
 });
+
+export const googleSignInSchema = Yup.object().shape({
+  fullName: Yup.string()
+    .trim()
+    .required(messages.USERNAME_REQUIRED)
+    .min(3, messages.FULLNAME_MIN_LENGTH_3),
+
+  role: Yup.string()
+    .trim()
+    .required(messages.ROLE_REQUIRED)
+    .min(3, messages.ROLE_MIN_LENGTH_3),
+
+  email: Yup.string()
+    .trim()
+    .required(messages.EMAIL_REQUIRED)
+    .email(messages.EMAIL_INVALID),
+});
+

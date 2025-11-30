@@ -4,8 +4,8 @@ const { login, register, OAuth } = require('../../services/role_based/auth.servi
 module.exports = {
     register: async (req, res) => {
         try {
-            let { fullName, email, phone, password } = req.body;
-            const result = await register(fullName, email, phone, password);
+            const body = req.body;
+            const result = await register(body);
 
             if (!result?.success) {
                 return res.status(result?.statusCode).json(
@@ -25,10 +25,9 @@ module.exports = {
 
     login: async (req, res) => {
         try {
-            const { email, password } = req.body;
-            console.log('login body ->>>> ', req.body)
+            const body = req.body;
 
-            const result = await login(email, password, req);
+            const result = await login(body, req);
 
             if (!result?.success) {
                 return res.status(401).json(
@@ -46,8 +45,8 @@ module.exports = {
 
     OAuth: async (req, res) => {
         try {
-            const { fullName, email } = req.body;
-            const result = await OAuth(fullName, email, req);
+            const body = req.body;
+            const result = await OAuth(body, req);
 
             if (!result?.success) {
                 return res.status(result?.statusCode).json(responseData(result?.message, result?.results, req, result?.success || false))

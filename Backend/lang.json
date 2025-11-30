@@ -977,5 +977,7 @@
   "INVALID_CREDENTIALS": { "en" : "Invalid credentials" },
   "USER_ALREADY_EXISTS": { "en": "User already exists" },
   "INVALID_ROLE": { "en" : "Invalid role" },
-  "USER_REGISTERED_SUCCESSFULLY": { "en" : "User registered successfully" }
+  "USER_REGISTERED_SUCCESSFULLY": { "en" : "User registered successfully" },
+  "INVALID_ROLE_FOR_OAUTH": { "en" : "Invalid role for OAuth" },
+  "LOGIN_SUCCESS": { "en" : "User login successfully" }
 }

@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
+const helmet = require('helmet')
 const connectDB = require('./configs/db.js')
 const path = require('path')
 const app = express()
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
   res.send(`API is Running on Port ${process.env.PORT}`)
 })
 app
+  .use(helmet({ crossOriginOpenerPolicy: { policy: "same-origin" } }))
   .use(cors(corsOption))
   .use(morgan('dev'))
   .use(

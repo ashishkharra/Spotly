@@ -24,7 +24,7 @@ const PhoneInput = ({ field, form, countryCode, ...props }) => {
       {...props}
       value={field.value}
       onChange={handleChange}
-      placeholder={`${countryCode} XXX XXX XXXX`}
+      placeholder={`XXX XXX XXXX`}
       className="bg-gray-200 border-none p-2 rounded-lg w-full outline-none"
     />
   );
