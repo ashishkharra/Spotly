@@ -19,6 +19,13 @@ module.exports.validate = (method) => {
           .isEmail()
           .withMessage('EMAIL_INVALID'),
 
+        body('role')
+          .notEmpty()
+          .trim()
+          .isString()
+          .isLength({ min: 3 })
+          .withMessage('ROLE_REQUIRED'),
+
         validatorMiddleware
       ];
     }
@@ -38,6 +45,13 @@ module.exports.validate = (method) => {
           .trim()
           .isEmail()
           .withMessage('EMAIL_INVALID'),
+
+        body('role')
+          .notEmpty()
+          .trim()
+          .isString()
+          .isLength({ min: 3 })
+          .withMessage('ROLE_REQUIRED'),
 
         body('phone')
           .notEmpty()
@@ -80,6 +94,13 @@ module.exports.validate = (method) => {
           .trim()
           .isEmail()
           .withMessage('EMAIL_INVALID'),
+
+        body('role')
+          .notEmpty()
+          .trim()
+          .isString()
+          .isLength({ min: 3 })
+          .withMessage('ROLE_REQUIRED'),
 
         body('password')
           .notEmpty()

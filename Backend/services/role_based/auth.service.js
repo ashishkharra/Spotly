@@ -6,28 +6,37 @@ const { generateSecurePassword, buildResponse } = require('../../helpers/helper.
 
 module.exports = {
 
-    login: async (email, password, req) => {
+    login: async ({ email, password, role = "user" }, req) => {
         try {
             const user = await User.findOne({ email }) || await Owner.findOne({ email });
-            console.log('User ->>>> ',user)
+            console.log('User ->>>> ', user)
 
             if (!user || user.isRemoved === 1) {
-                return { 
-                    success: false, 
+                return {
+                    success: false,
                     statusCode: 404,
-                    message: "USER_NOT_FOUND", 
-                    results: {} 
+                    message: "USER_NOT_FOUND",
+                    results: {}
+                };
+            }
+
+            if (role !== user.role) {
+                return {
+                    success: false,
+                    statusCode: 403,
+                    message: "INVALID_ROLE",
+                    results: {}
                 };
             }
 
             const isMatch = await bcrypt.compare(password, user.password);
             console.log('Password match _>>>>>> ', isMatch)
             if (!isMatch) {
-                return { 
-                    success: false, 
+                return {
+                    success: false,
                     statusCode: 401,
-                    message: "INVALID_CREDENTIALS", 
-                    results: {} 
+                    message: "INVALID_CREDENTIALS",
+                    results: {}
                 };
             }
 
@@ -51,23 +60,23 @@ module.exports = {
 
         } catch (error) {
             console.error('Login error : ', error);
-            return { 
-                success: false, 
+            return {
+                success: false,
                 statusCode: 500,
-                message: "SERVER_ERROR", 
-                results: error.message 
+                message: "SERVER_ERROR",
+                results: error.message
             };
         }
     },
 
-    register: async (fullName, email, phone, password, role = "user") => {
+    register: async ({ fullName, email, phone, password, role = "user", countryCode }) => {
         try {
             if (!["user", "owner"].includes(role)) {
-                return { 
-                    success: false, 
+                return {
+                    success: false,
                     statusCode: 400,
-                    message: "INVALID_ROLE", 
-                    results: {} 
+                    message: "INVALID_ROLE",
+                    results: {}
                 };
             }
 
@@ -88,7 +97,8 @@ module.exports = {
                 email,
                 contact: phone,
                 password,
-                role
+                role,
+                countryCode
             });
 
             return {
@@ -109,29 +119,38 @@ module.exports = {
         }
     },
 
-    OAuth: async (fullName, email, role = "user", req) => {
+    OAuth: async ({ fullName, email, role = "user" }, req) => {
         try {
             if (!["user", "owner"].includes(role)) {
-                return { 
-                    success: false, 
+                return {
+                    success: false,
                     statusCode: 400,
-                    message: "INVALID_ROLE", 
-                    results: {} 
+                    message: "INVALID_ROLE",
+                    results: {}
                 };
+            }
+
+            let existingUser = await User.findOne({ email }) || await Owner.findOne({ email });
+
+            if (existingUser) {
+
+                if (existingUser.role !== role) {
+                    return {
+                        success: false,
+                        statusCode: 403,
+                        message: "INVALID_ROLE_FOR_OAUTH",
+                        results: {}
+                    };
+                }
+
+                console.log('existing user ->>>>>> ', existingUser)
+
+                return buildResponse(existingUser, "LOGIN_SUCCESS", req, 200)
             }
 
             const Model = role === "owner" ? Owner : User;
 
-            let existingUser = await Model.findOne({ email });
-
-            if (existingUser) {
-                return {
-                    ...buildResponse(existingUser, "USER_ALREADY_EXISTS", req),
-                    statusCode: 409
-                };
-            }
-
-            const generatedPassword = generateSecurePassword()
+            const generatedPassword = generateSecurePassword();
 
             const newUser = await Model.create({
                 fullName,
@@ -140,19 +159,18 @@ module.exports = {
                 role
             });
 
-            return {
-                ...buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req),
-                statusCode: 201
-            };
+            return buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req, 201)
 
         } catch (error) {
             console.error("OAuth Error:", error);
             return {
                 success: false,
                 statusCode: 500,
-                message: "SERVER_ERROR",
+                message: 'SERVER_ERROR',
                 results: error.message
             };
         }
     },
+
 };
+201

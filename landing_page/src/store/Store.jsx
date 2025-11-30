@@ -4,19 +4,35 @@ import { persist } from 'zustand/middleware';
 export const userAuth = create(
   persist(
     (set) => ({
-      user: null,
+      token: null,
+      refreshToken: null,
+      role: null,
 
-      setUser: (data) => set({ user: data }),
+      setUser: (data) =>
+        set({
+          token: data.token || null,
+          refreshToken: data.refreshToken || null,
+          role: data.role || null,
+        }),
 
-      clearUser: () => set({ user: null }),
+      clearUser: () =>
+        set({
+          token: null,
+          refreshToken: null,
+          role: null,
+        }),
 
       clearStorage: () => {
-        localStorage.removeItem('user-auth');
-        set({ user: null });
+        localStorage.removeItem("user-auth");
+        set({
+          token: null,
+          refreshToken: null,
+          role: null,
+        });
       },
     }),
     {
-      name: 'user-auth',
+      name: "user-auth",
       getStorage: () => localStorage,
     }
   )

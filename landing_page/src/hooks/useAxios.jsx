@@ -19,7 +19,10 @@ const useAxios = () => {
 
       return response.data;
     } catch (err) {
-      setError(err.response?.data || err.message);
+      const errorResponse = err.response?.data || { success: false, message: err.message, results : {} };
+
+      setError(errorResponse);
+      return errorResponse;
     } finally {
       setLoading(false);
     }

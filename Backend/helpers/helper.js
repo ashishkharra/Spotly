@@ -969,7 +969,9 @@ module.exports = {
     return password.split('').sort(() => crypto.randomInt(0, 2) - 1).join('');
   },
 
-  buildResponse: (user, message, req) => {
+  buildResponse: (user, message, req, statusCode) => {
+
+    console.log('user role ->>>>>>> ', user)
     const payload = {
       id: user?._id,
       role: user?.role,
@@ -979,9 +981,10 @@ module.exports = {
     const tokens = generateAuthToken(payload, req);
 
     return {
-      status: true,
+      status: statusCode,
+      success: true,
       message,
-      results: { ...tokens, role }
+      results: { ...tokens, role :  user?.role }
     };
   },
 
