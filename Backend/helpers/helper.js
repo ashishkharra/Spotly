@@ -11,7 +11,7 @@ const moment = require('moment')
 const fs = require('fs')
 const ejs = require('ejs')
 const dayjs = require('dayjs')
-// const EmailTemplate = require('../models/emailTemplate')
+const EmailTemplate = require('../models/admin/emailTemplate.schema.js')
 // const Faq = require('../models/faq.model')
 // const Country = require('../models/countries.model')
 // const StaticContent = require('../models/staticcontent.model')
@@ -65,7 +65,7 @@ const sendEmailCommon = async (subject, renderedTemplate, dataBody) => {
   try {
     const transporter = createTransport();
     await transporter.sendMail({
-      from: process.env.EMAIL_ADDRESS,
+      from: process.env.EMAIL_USER,
       to: dataBody.email,
       subject: subject,
       html: renderedTemplate,
@@ -340,7 +340,7 @@ module.exports = {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       return res
-        .status(200)
+        .status(422)
         .json(responseData(errors.errors[0].msg, {}, req, false))
     } else {
       next()
@@ -348,22 +348,27 @@ module.exports = {
   },
   sendEmail: async (slug, dataBody) => {
     let emailTempRecord = await EmailTemplate.findOne({ slug });
+    console.log('email template ->>>>>>> ', emailTempRecord)
     if (!_.isEmpty(emailTempRecord)) {
-      dataBody.title = `${emailTempRecord?.title}`;
-      dataBody.subject = `${emailTempRecord?.subject}`;
+      dataBody.title = emailTempRecord.title;
+      dataBody.subject = emailTempRecord.subject;
       dataBody.logo = process.env.API_BASE_URL + "/images/logo.svg";
+      dataBody.signature = emailTempRecord.signature;
+      dataBody.keywordList = emailTempRecord.keywordList;
 
-      const content = emailTempRecord?.description;
+      const content = emailTempRecord.description;
       const replacedContent = content.replace(/\[(\w+)\]/g, (match, p1) => {
         return dataBody[p1] || match;
       });
 
       dataBody.content = replacedContent;
-      console.log('dataBody: ', dataBody);
+
+      console.log("FINAL EMAIL DATA:", dataBody);
 
       const template = fs.readFileSync("view/template/email.ejs", "utf8");
       const renderedTemplate = ejs.render(template, dataBody);
-      await sendEmailCommon(dataBody?.subject, renderedTemplate, dataBody);
+      await sendEmailCommon(dataBody.subject, renderedTemplate, dataBody);
+
     } else {
       console.log("email template not found==>>>>>", slug);
     }
@@ -969,22 +974,21 @@ module.exports = {
     return password.split('').sort(() => crypto.randomInt(0, 2) - 1).join('');
   },
 
-  buildResponse: (user, message, req, statusCode) => {
+  buildResponse: async (user, message, req, statusCode) => {
 
-    console.log('user role ->>>>>>> ', user)
     const payload = {
       id: user?._id,
       role: user?.role,
       tokenVersion: user?.tokenVersion
     }
 
-    const tokens = generateAuthToken(payload, req);
+    const tokens = await generateAuthToken(payload, req);
 
     return {
-      status: statusCode,
+      statusCode: statusCode,
       success: true,
       message,
-      results: { ...tokens, role :  user?.role }
+      results: { ...tokens, role: user?.role }
     };
   },
 

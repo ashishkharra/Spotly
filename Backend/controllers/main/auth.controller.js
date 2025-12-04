@@ -1,5 +1,5 @@
 const { responseData } = require('../../helpers/responseData')
-const { login, register, OAuth } = require('../../services/role_based/auth.service.js')
+const { login, register, OAuth, contactUs } = require('../../services/main/auth.service.js')
 
 module.exports = {
     register: async (req, res) => {
@@ -46,6 +46,7 @@ module.exports = {
     OAuth: async (req, res) => {
         try {
             const body = req.body;
+            console.log('body ->>>> ', body)
             const result = await OAuth(body, req);
 
             if (!result?.success) {
@@ -59,4 +60,23 @@ module.exports = {
             return res.status(500).json(responseData("SERVER_ERROR", { error: error.message }, req, false));
         }
     },
+
+    contactUs: async (req, res) => {
+        try {
+            const body = req.body
+            const result = await contactUs(body)
+
+            if (!result?.success) {
+                return res.status(401).json(
+                    responseData(result?.message, result?.results, req, result?.success || false)
+                );
+            }
+            return res.status(result?.statusCode).json(
+                responseData(result?.message, result?.results, req, result?.success || false)
+            );
+        } catch (error) {
+            console.log("Contact us error : ", error)
+            return res.status(500).json(responseData('SERVER_ERROR', { error: error.message }, req, false))
+        }
+    }
 }

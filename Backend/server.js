@@ -11,7 +11,7 @@ const server = http.createServer(app)
 
 
 // ROLE AUTH
-const roleAuthRoutes = require('./routes/role_based/auth.route.js')
+const mainRoutes = require('./routes/main/auth.route.js')
 
 // USER ROUTES
 const userRoutes = require('./routes/users/userAuth.routes.js')
@@ -48,7 +48,7 @@ app
   .use(express.static(path.join(__dirname, 'public')))
 
   // Role Routes
-  .use('/v1/api', roleAuthRoutes)
+  .use('/v1/api', mainRoutes)
   // Admin Routes
   // Space Owner Routes
   .use('/v1/api/owner', spaceOwnerRoutes)
