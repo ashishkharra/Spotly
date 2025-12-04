@@ -979,5 +979,18 @@
   "INVALID_ROLE": { "en" : "Invalid role" },
   "USER_REGISTERED_SUCCESSFULLY": { "en" : "User registered successfully" },
   "INVALID_ROLE_FOR_OAUTH": { "en" : "Invalid role for OAuth" },
-  "LOGIN_SUCCESS": { "en" : "User login successfully" }
+  "LOGIN_SUCCESS": { "en" : "User login successfully" },
+  "EMAIL_INVALID": { "en": "Invalid email format" },
+  "ROLE_REQUIRED": { "en": "Role is required" },
+  "MOBILE_INVALID_FORMAT": { "en": "Invalid mobile number format. Example: 123 456 7890" },
+  "COUNTRY_CODE_INVALID": { "en": "Invalid country code format. Example: +1" },
+  "PASSWORD_MIN_LENGTH_6": { "en": "Password must be at least 6 characters long" },
+  "PASSWORD_NEEDS_LOWERCASE": { "en": "Password must contain at least one lowercase letter" },
+  "PASSWORD_NEEDS_UPPERCASE": { "en": "Password must contain at least one uppercase letter" },
+  "PASSWORD_NEEDS_NUMBER": { "en": "Password must contain at least one number" },
+  "PASSWORD_NEEDS_SPECIAL_CHAR": { "en": "Password must contain at least one special character (@, $, !, %, *, ?, &)" },
+  "MESSAGE_REQUIRED": { "en" : "Message is required" },
+  "MESSAGE_INVALID": { "en" : "Message is not valid" },
+  "MAXIMUM_MESSAGE_LENGTH_100": { "en" : "Message maximum length is 100"}
+
 }

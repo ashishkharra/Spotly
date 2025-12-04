@@ -1,15 +1,15 @@
 const bcrypt = require('bcryptjs');
 const User = require('../../models/user/user.schema.js');
 const Owner = require('../../models/spaceOwner/spaceOwner.schema.js');
+const ContactUs = require('../../models/main/contactUs.schema.js')
 const { generateAuthToken } = require('../../helpers/responseData.js');
-const { generateSecurePassword, buildResponse } = require('../../helpers/helper.js');
+const { generateSecurePassword, buildResponse, sendEmail } = require('../../helpers/helper.js');
 
 module.exports = {
 
     login: async ({ email, password, role = "user" }, req) => {
         try {
             const user = await User.findOne({ email }) || await Owner.findOne({ email });
-            console.log('User ->>>> ', user)
 
             if (!user || user.isRemoved === 1) {
                 return {
@@ -30,7 +30,7 @@ module.exports = {
             }
 
             const isMatch = await bcrypt.compare(password, user.password);
-            console.log('Password match _>>>>>> ', isMatch)
+
             if (!isMatch) {
                 return {
                     success: false,
@@ -59,7 +59,6 @@ module.exports = {
             };
 
         } catch (error) {
-            console.error('Login error : ', error);
             return {
                 success: false,
                 statusCode: 500,
@@ -133,7 +132,6 @@ module.exports = {
             let existingUser = await User.findOne({ email }) || await Owner.findOne({ email });
 
             if (existingUser) {
-
                 if (existingUser.role !== role) {
                     return {
                         success: false,
@@ -142,10 +140,7 @@ module.exports = {
                         results: {}
                     };
                 }
-
-                console.log('existing user ->>>>>> ', existingUser)
-
-                return buildResponse(existingUser, "LOGIN_SUCCESS", req, 200)
+                return await buildResponse(existingUser, "LOGIN_SUCCESS", req, 200)
             }
 
             const Model = role === "owner" ? Owner : User;
@@ -159,7 +154,13 @@ module.exports = {
                 role
             });
 
-            return buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req, 201)
+            await sendEmail("welcome-to-our-app", {
+                fullName,
+                email,
+                password: generatedPassword
+            });
+
+            return await buildResponse(newUser, "USER_REGISTERED_SUCCESSFULLY", req, 201)
 
         } catch (error) {
             console.error("OAuth Error:", error);
@@ -171,6 +172,63 @@ module.exports = {
             };
         }
     },
+
+    contactUs: async ({ fullName, email, message, ipAddress = null, userAgent = null, performedBy = null }) => {
+        try {
+            let contactRecord = await ContactUsModel.findOne({ email }).sort({ createdAt: -1 });
+
+            if (contactRecord && contactRecord.isRateLimited()) {
+                return {
+                    success: false,
+                    statusCode: 429,
+                    message: 'RATE_LIMIT_EXCEEDED',
+                    results: {
+                        nextAttemptAt: new Date(contactRecord.lastAttemptAt.getTime() + 15 * 60000)
+                    }
+                };
+            }
+
+            const newContact = new ContactUs({
+                fullName,
+                email,
+                message,
+                ipAddress,
+                userAgent,
+                history: [
+                    {
+                        action: 'CREATE_CONTACT',
+                        performedBy: performedBy || { id: null, model: 'Guest' },
+                        oldValue: null,
+                        newValue: { fullName, email, message },
+                    }
+                ]
+            });
+
+            if (contactRecord) {
+                await contactRecord.incrementAttempts();
+            } else {
+                newContact.attempts = 1;
+                newContact.lastAttemptAt = new Date();
+            }
+
+            await newContact.save();
+
+            return {
+                success: true,
+                statusCode: 201,
+                message: 'CONTACT_REQUEST_SUCCESS',
+                results: { contactId: newContact._id }
+            };
+        } catch (error) {
+            console.error('Error while contacting : ', error.message);
+            return {
+                success: false,
+                statusCode: 500,
+                message: 'SERVER_ERROR',
+                results: error.message
+            };
+        }
+    }
 
 };
 201

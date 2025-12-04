@@ -1,4 +1,4 @@
-const { body } = require('express-validator');
+const { body, query } = require('express-validator');
 const { validatorMiddleware } = require('../../helpers/helper');
 
 module.exports.validate = (method) => {
@@ -119,6 +119,47 @@ module.exports.validate = (method) => {
 
         validatorMiddleware
       ];
+    }
+
+    case 'contactUs': {
+      return [
+        body('fullName')
+          .notEmpty()
+          .withMessage('USERNAME_REQUIRED')
+          .trim()
+          .isLength({ min: 3 })
+          .withMessage('FULLNAME_MIN_LENGTH_3'),
+
+        body('email')
+          .notEmpty()
+          .withMessage('EMAIL_REQUIRED')
+          .trim()
+          .isEmail()
+          .withMessage('EMAIL_INVALID'),
+
+        body('message')
+          .notEmpty()
+          .withMessage("MESSAGE_REQUIRED")
+          .isString()
+          .withMessage('MESSAGE_INVALID')
+          .isLength({ min: 100 })
+          .withMessage('MAXIMUM_MESSAGE_LENGTH_100'),
+
+        validatorMiddleware
+      ]
+    }
+
+    case 'page-data': {
+      return [
+        query('page')
+          .notEmpty()
+          .withMessage('PAGE_NAME_REQUIRED')
+          .isString()
+          .withMessage('PAGE_NAME_INVALID')
+          .trim(),
+
+        validatorMiddleware
+      ]
     }
   }
 };

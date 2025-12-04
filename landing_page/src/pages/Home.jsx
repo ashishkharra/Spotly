@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
-import { Testimonials, partners, features, faqs, pricingPlans, teamMembers } from "../config/constans.js";
+import { Testimonials, partners, teamMembers } from "../config/constans.js";
 
 
 const fadeIn = {
@@ -85,22 +85,6 @@ const Home = () => {
               Parking Solutions
             </span>
           </motion.h1>
-
-          <motion.div
-            variants={slideUp}
-            className="max-w-4xl w-72 sm:w-96 lg:w-[520px] xl:w-[600px] 2xl:w-[700px] mx-auto"
-          >
-            <div className="relative mt-8 border border-white rounded-lg bg-orange-500">
-              <input
-                type="text"
-                placeholder="Search locations..."
-                className="w-full px-6 py-5 rounded-xl border-0 shadow-lg focus:ring-2 focus:ring-orange-500"
-              />
-              <button className="absolute right-2 top-2 bg-white text-black px-8 py-2.5 rounded-lg hover:bg-orange-600 transition">
-                Search
-              </button>
-            </div>
-          </motion.div>
 
         </motion.div>
       </section>
@@ -274,100 +258,6 @@ const Home = () => {
         </motion.div>
       </section>
 
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={staggerChildren}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <motion.h2 variants={slideUp} className="text-3xl font-bold mb-4">
-              Advanced Parking Features
-            </motion.h2>
-            <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
-              Comprehensive solutions built for modern urban challenges
-            </motion.p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                variants={slideUp}
-                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition border border-gray-100"
-              >
-                <div className="w-14 h-14 bg-orange-100 rounded-lg flex items-center justify-center mb-6">
-                  <img loading="lazy" src={feature.icon} alt={feature.title} className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-semibold mb-4">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={staggerChildren}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <motion.h2 variants={slideUp} className="text-3xl font-bold mb-4">
-              Flexible Pricing Plans
-            </motion.h2>
-            <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
-              Scale with solutions that grow with your needs
-            </motion.p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                variants={slideUp}
-                className={`p-8 rounded-2xl ${plan.highlight ? 'bg-gray-900 text-white' : 'bg-white'} 
-                                shadow-lg hover:shadow-xl transition`}
-              >
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold mb-2">{plan.title}</h3>
-                  <p className={`${plan.highlight ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
-                    {plan.description}
-                  </p>
-                  <div className="text-4xl font-bold mb-4">
-                    {plan.price}
-                    <span className="text-lg font-normal text-gray-500">/month</span>
-                  </div>
-                  <button className={`w-full py-3 rounded-lg font-semibold 
-                                        ${plan.highlight ?
-                      'bg-orange-500 hover:bg-orange-600 text-white' :
-                      'bg-gray-100 hover:bg-gray-200 text-gray-900'}`}
-                  >
-                    Get Started
-                  </button>
-                </div>
-                <ul className="space-y-4">
-                  {plan.features.map((feature, fIndex) => (
-                    <li key={fIndex} className="flex items-center">
-                      <svg className={`w-5 h-5 mr-3 ${plan.highlight ? 'text-orange-400' : 'text-orange-500'}`}
-                        fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="py-20 bg-gradient-to-r from-gray-900 to-orange-900">
         <div className="max-w-7xl mx-auto px-4 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 text-center text-white">
@@ -432,44 +322,6 @@ const Home = () => {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            variants={staggerChildren}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <motion.h2 variants={slideUp} className="text-3xl font-bold mb-4">
-              Frequently Asked Questions
-            </motion.h2>
-            <motion.p variants={slideUp} className="text-gray-600 max-w-2xl mx-auto">
-              Answers to common questions about our platform
-            </motion.p>
-          </motion.div>
-
-          <div className="max-w-7xl grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-8 w-full">
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                variants={slideUp}
-                className="bg-white rounded-xl shadow-sm mb-4 p-6 cursor-pointer hover:bg-gray-50 transition"
-              >
-                <div className="flex justify-between items-center">
-                  <h3 className="font-semibold">{faq.question}</h3>
-                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-                <p className="mt-4 text-gray-600">{faq.answer}</p>
-              </motion.div>
-            ))}
-          </div>
-
         </div>
       </section>
 

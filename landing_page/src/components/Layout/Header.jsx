@@ -8,11 +8,14 @@ const Header = () => {
 
     const menuItems = [
         { name: 'Home', path: '/' },
-        { name: 'Find Parking', path: '/find-parking' },
+        { name: 'Features', path: '/features' },
         { name: 'How It Works', path: '/how-it-works' },
+        { name: 'Pricing', path: '/pricing' },
+        { name: 'FAQ', path: '/faq' },
         { name: 'About', path: '/about' },
         { name: 'Contact', path: '/contact' },
     ];
+
     const location = useLocation();
     const hideMenu = location.pathname === "/register";
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -111,21 +114,12 @@ const Header = () => {
                                     </Link>
                                 ) : (
                                     <Link
-                                        to="/register"
+                                        to="/auth"
                                         className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition"
                                     >
                                         Sign In
                                     </Link>
                                 )}
-                            </motion.div>
-
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <Link
-                                    to="/list-space"
-                                    className="border-2 border-orange-500 rounded-lg text-orange-500 hover:bg-orange-50 px-4 py-2 transition-colors"
-                                >
-                                    List Your Space
-                                </Link>
                             </motion.div>
                         </div>
                     )}
