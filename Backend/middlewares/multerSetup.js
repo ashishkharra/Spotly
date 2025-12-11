@@ -21,6 +21,11 @@ const ownerProfile = createUploader({
   maxSize: 5 * 1024 * 1024
 })
 
+const landingPage = createUploader({
+  folderName: "main",
+  allowedMime: [...imageMime],
+  maxSize: 5 * 1024 * 1024
+})
 
 // const adminDoc = uploadProfilePics.fields([
 //   { name: 'profilePic', maxCount: 1 }
@@ -32,6 +37,10 @@ const userDoc = userProfile.fields([
 
 const ownerDoc = ownerProfile.fields([
   { name : "profilePic", maxCount: 1 }
+])
+
+const landingDoc = landingPage.fields([
+  { name :  "bannerImg", maxCount : 1 }
 ])
 
 module.exports = { userDoc, ownerDoc }

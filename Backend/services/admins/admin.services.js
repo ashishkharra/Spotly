@@ -1,6 +1,6 @@
-const Admin = require('../../models/admin.model')
-const EmailTemplate = require('../../models/emailTemplate')
-const fs = require('fs')
+const Admin = require('../../models/admin/admin.schema.js')
+const EmailTemplate = require('../../models/admin/emailTemplate.schema.js')
+const RefreshToken = require('../../models/token/refreshToken.schema.js')
 const { isEmpty } = require('lodash')
 const {
   responseData,
@@ -16,49 +16,160 @@ const {
   generatePutPresignedUrl,
   sendEmail
 } = require('../../helpers/helper')
-const ejs = require('ejs')
-const constant = require('../../helpers/constant')
-const Country = require('../../models/countries.model')
 
 module.exports = {
-  adminLogin: async (req, res) => {
+  logout: async (id) => {
     try {
-      let { email, password } = req.body
-      email = email?.toLowerCase()
-      let admin = await Admin.findOne({ email })
+      const result = await RefreshToken.deleteMany({ userType: 'Admin', userId: id })
 
-      if (!isEmpty(admin)) {
-        if (admin?.status === constant.status.inactive) {
-          return res.json(responseData('ACCOUNT_INACTIVE', {}, req, false))
-        }
-        bcrypt.compare(password, admin.password, async (err, response) => {
-          if (err)
-            return res.json(responseData('ADMIN_INVALID_LOGIN', {}, req, false))
-          if (!response)
-            return res.json(responseData('ADMIN_INVALID_LOGIN', {}, req, false))
-          const adminData = admin.toJSON()
-          delete adminData['password']
-          adminData.fullName = adminData.firstName + ' ' + adminData.lastName
-          let deviceTokens = generateAuthToken(adminData)
-          await Admin.findOneAndUpdate(
-            { _id: admin._id },
-            { forceLogout: false }
-          )
-          return res.json(
-            responseData(
-              'ACCOUNT_LOGIN',
-              { ...adminData, ...deviceTokens },
-              req,
-              true
-            )
-          )
-        })
-      } else {
-        return res.json(responseData('ADMIN_NOT_FOUND', {}, req, false))
+      console.log("Logout result:", result);
+      return {
+        statusCode: 200,
+        success: true,
+        message: 'LOGOUT_SUCCESS',
+        results: {}
       }
     } catch (error) {
-      console.log('Error', error.message)
-      return res.json(responseData('ERROR_OCCUR', {}, req, false))
+      return {
+        statusCode: 500,
+        success: false,
+        message: 'ERROR_OCCUR',
+        results: error.message
+      }
+    }
+  },
+  adminLogin: async (req) => {
+    try {
+      const { email, password, remember_me } = req.body;
+      let admin = await Admin.findOne({ email });
+
+      if (!admin) {
+        return {
+          statusCode: 404,
+          success: false,
+          message: 'ADMIN_NOT_FOUND',
+          results: {}
+        };
+      }
+
+      if (admin.status === 'inactive') {
+        return {
+          statusCode: 403,
+          success: false,
+          message: 'ACCOUNT_INACTIVE',
+          results: {}
+        };
+      }
+
+      const isPasswordValid = await admin.comparePassword(password);
+      if (!isPasswordValid) {
+        return {
+          statusCode: 401,
+          success: false,
+          message: 'ADMIN_INVALID_LOGIN',
+          results: {}
+        };
+      }
+
+      const payload = {
+        id: admin._id,
+        role: admin?.role,
+        tokenVersion: admin?.tokenVersion
+      }
+
+      const deviceTokens = await generateAuthToken(payload, req);
+
+      let rememberToken = null;
+      if (remember_me) {
+        rememberToken = admin.generateRememberToken();
+        await admin.save();
+      }
+
+      admin.last_login = new Date();
+      admin.forceLogout = false;
+      admin.login_count = (admin.login_count || 0) + 1;
+      await admin.save();
+
+      return {
+        statusCode: 200,
+        success: true,
+        message: 'ACCOUNT_LOGIN',
+        results: {
+          ...deviceTokens,
+          role: admin.role,
+          email: admin.email,
+          username: admin.first_name + ' ' + admin.last_name,
+          profile_image: admin.profile_image,
+          last_login: admin.last_login.toISOString(),
+          remember_token: rememberToken
+        }
+      };
+
+    } catch (error) {
+      console.log("Error:", error.message);
+
+      return {
+        statusCode: 500,
+        success: false,
+        message: 'ERROR_OCCUR',
+        results: error.message
+      };
+    }
+  },
+  validateRememberToken: async (body) => {
+    try {
+      const { remember_token } = body;
+
+      if (!remember_token) {
+        return {
+          status: 400,
+          success: false,
+          message: 'TOKEN_REQUIRED',
+          results: {}
+        };
+      }
+
+      const admin = await Admin.findOne({
+        'remember_tokens.token': remember_token,
+        'remember_tokens.expires_at': { $gt: new Date() }
+      });
+
+      if (!admin) {
+        return {
+          status: 401,
+          success: false,
+          message: 'INVALID_REMEMBER_TOKEN',
+          results: {}
+        };
+      }
+
+      const adminData = admin.toObject();
+      delete adminData.password;
+
+      const deviceTokens = generateAuthToken(adminData);
+
+      admin.last_activity = new Date();
+      await admin.save();
+
+      return {
+        status: 200,
+        success: true,
+        message: 'TOKEN_VALIDATED',
+        results: {
+          ...adminData,
+          ...deviceTokens
+        }
+      };
+
+    } catch (error) {
+      console.log("Error in validateRememberToken:", error.message);
+
+      return {
+        status: 500,
+        success: false,
+        message: 'ERROR_OCCUR',
+        results: error.message
+      };
     }
   },
   adminProfile: async (req, res) => {

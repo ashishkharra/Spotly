@@ -16,25 +16,12 @@ const PageSectionSchema = new mongoose.Schema({
       "stats",
       "team",
       "testimonials",
-      "custom_html"
+      "custom_html",
+      "custom_json"
     ]
   },
 
-  title: { type: String },
-  subtitle: { type: String },
-  description: { type: String },
-
-  media: [{ type: String }],
-
-  items: [
-    {
-      title: { type: String },
-      subtitle: { type: String },
-      description: { type: String },
-      icon: { type: String },
-      image: { type: String }
-    }
-  ],
+  data: mongoose.Schema.Types.Mixed,
 
   order: { type: Number, required: true },
   status: { type: String, enum: ["active", "inactive"], default: "active" }

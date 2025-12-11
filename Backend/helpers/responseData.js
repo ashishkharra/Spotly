@@ -36,6 +36,7 @@ module.exports = {
 
     await RefreshToken.create({
       userId: user.id,
+      userType: user.role,
       tokenHash: refreshTokenHash,
       device: req?.headers["x-device"] || "unknown",
       ip: req?.ip,
