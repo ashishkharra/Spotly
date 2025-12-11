@@ -62,12 +62,15 @@ const handleVerification = async (req, res, next, token) => {
 
     req.user = user
     switch (user.userType || user.role) {
-      case constant.type.admin:
-      case constant.type.subAdmin:
+      case 'Owner':
+        handleUserRole(user, req, res, next)
+        break
+
+      case 'Admin':
         await handleAdminRole(user, req, res, next)
         break
 
-      case 'user':
+      case 'User':
         handleUserRole(user, req, res, next)
         break
 

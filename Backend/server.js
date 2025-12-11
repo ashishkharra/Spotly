@@ -9,6 +9,8 @@ const app = express()
 const http = require('http')
 const server = http.createServer(app)
 
+// Admin Routes
+const adminRoutes = require('./routes/admins/admins.route.js')
 
 // ROLE AUTH
 const mainRoutes = require('./routes/main/auth.route.js')
@@ -42,6 +44,8 @@ app
     })
   )
 
+  .set('view engine', 'ejs')
+  .set('views', path.join(__dirname, 'views'))
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
   .use(express.static('public'))
@@ -50,6 +54,7 @@ app
   // Role Routes
   .use('/v1/api', mainRoutes)
   // Admin Routes
+  .use('/admin/auth', adminRoutes)
   // Space Owner Routes
   .use('/v1/api/owner', spaceOwnerRoutes)
   // User Routes

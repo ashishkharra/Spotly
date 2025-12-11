@@ -27,6 +27,16 @@
     "en": "Invalid mobile OTP.",
     "ar": ""
   },
+  "TOKEN_REQUIRED": {
+    "en": "Access token is required"
+  },
+  "TOKEN_VALIDATED": { "en" : "Tokne validated successfully!" },
+  "INVALID_REMEMBER_TOKEN": {
+    "en": "Remember token is not valid"
+  },
+  "INVALID_REMEMBER_ME": {
+    "en": "Invalid remember me type"
+  },
   "INVALID_STATUS": {
     "en": "Invalid status.",
     "ar": ""
@@ -971,26 +981,106 @@
     "en": "Number of months is required.",
     "ar": ""
   },
-
-  "SERVER_ERROR": { "en" : "Server error" },
-  "USER_LOGIN_SUCCESS": { "en" : "User login successfully" },
-  "INVALID_CREDENTIALS": { "en" : "Invalid credentials" },
-  "USER_ALREADY_EXISTS": { "en": "User already exists" },
-  "INVALID_ROLE": { "en" : "Invalid role" },
-  "USER_REGISTERED_SUCCESSFULLY": { "en" : "User registered successfully" },
-  "INVALID_ROLE_FOR_OAUTH": { "en" : "Invalid role for OAuth" },
-  "LOGIN_SUCCESS": { "en" : "User login successfully" },
-  "EMAIL_INVALID": { "en": "Invalid email format" },
-  "ROLE_REQUIRED": { "en": "Role is required" },
-  "MOBILE_INVALID_FORMAT": { "en": "Invalid mobile number format. Example: 123 456 7890" },
-  "COUNTRY_CODE_INVALID": { "en": "Invalid country code format. Example: +1" },
-  "PASSWORD_MIN_LENGTH_6": { "en": "Password must be at least 6 characters long" },
-  "PASSWORD_NEEDS_LOWERCASE": { "en": "Password must contain at least one lowercase letter" },
-  "PASSWORD_NEEDS_UPPERCASE": { "en": "Password must contain at least one uppercase letter" },
-  "PASSWORD_NEEDS_NUMBER": { "en": "Password must contain at least one number" },
-  "PASSWORD_NEEDS_SPECIAL_CHAR": { "en": "Password must contain at least one special character (@, $, !, %, *, ?, &)" },
-  "MESSAGE_REQUIRED": { "en" : "Message is required" },
-  "MESSAGE_INVALID": { "en" : "Message is not valid" },
-  "MAXIMUM_MESSAGE_LENGTH_100": { "en" : "Message maximum length is 100"}
-
+  "SERVER_ERROR": {
+    "en": "Server error"
+  },
+  "USER_LOGIN_SUCCESS": {
+    "en": "User login successfully"
+  },
+  "INVALID_CREDENTIALS": {
+    "en": "Invalid credentials"
+  },
+  "USER_ALREADY_EXISTS": {
+    "en": "User already exists"
+  },
+  "INVALID_ROLE": {
+    "en": "Invalid role"
+  },
+  "USER_REGISTERED_SUCCESSFULLY": {
+    "en": "User registered successfully"
+  },
+  "INVALID_ROLE_FOR_OAUTH": {
+    "en": "Invalid role for OAuth"
+  },
+  "LOGIN_SUCCESS": {
+    "en": "User login successfully"
+  },
+  "EMAIL_INVALID": {
+    "en": "Invalid email format"
+  },
+  "ROLE_REQUIRED": {
+    "en": "Role is required"
+  },
+  "MOBILE_INVALID_FORMAT": {
+    "en": "Invalid mobile number format. Example: 123 456 7890"
+  },
+  "COUNTRY_CODE_INVALID": {
+    "en": "Invalid country code format. Example: +1"
+  },
+  "PASSWORD_MIN_LENGTH_6": {
+    "en": "Password must be at least 6 characters long"
+  },
+  "PASSWORD_NEEDS_LOWERCASE": {
+    "en": "Password must contain at least one lowercase letter"
+  },
+  "PASSWORD_NEEDS_UPPERCASE": {
+    "en": "Password must contain at least one uppercase letter"
+  },
+  "PASSWORD_NEEDS_NUMBER": {
+    "en": "Password must contain at least one number"
+  },
+  "PASSWORD_NEEDS_SPECIAL_CHAR": {
+    "en": "Password must contain at least one special character (@, $, !, %, *, ?, &)"
+  },
+  "MESSAGE_REQUIRED": {
+    "en": "Message is required"
+  },
+  "MESSAGE_INVALID": {
+    "en": "Message is not valid"
+  },
+  "MAXIMUM_MESSAGE_LENGTH_100": {
+    "en": "Message maximum length is 100"
+  },
+  "PAGE_DATA_NOT_FOUND": {
+    "en": "Page data not found"
+  },
+  "PAGE_DATA_FETCH_SUCCESS": {
+    "en": "Page data fetched successfully"
+  },
+  "UNAUTHORIZED": {
+    "en": "User not authorized"
+  },
+  "PAGE_NOT_FOUND": {
+    "en": "Page not found"
+  },
+  "PAGE_SECTIONS_SAVED": {
+    "en": "Page section is saved"
+  },
+  "PAGE_NAME_REQUIRED": {
+    "en" : "Page name is required"
+  },
+  "PAGE_NAME_INVALID": {
+    "en" : "Page name is not valid"
+  },
+  "HERO_SECTION_IS_REQUIRED": {
+    "en" : "Hero section is required"
+  },
+  "HERO_BACKGROUND_IS_REQUIRED": {
+    "en" : "Hero background is required"
+  },
+  "LIMIT_MUST_BE_NUMBER_BIGGER_THEN_0": {
+    "en" : "Limit must be number and bigger than 0"
+  },
+  "STATS_MUST_BE_ARRAY": {
+    "en" : "Stats must be array"
+  },
+  "STATS_MUST_HAVE_AT_LEAST_ONE_LABEL": {
+    "en" : "Stats must have at least one label"
+  },
+    "STATS_MUST_HAVE_AT_LEAST_ONE_VALUE": {
+    "en" : "Stats must have at least one value"
+  },
+  "LIMIT_AT_LEAST_1": {
+    "en" : "Limit must at least 1"
+  }
 }

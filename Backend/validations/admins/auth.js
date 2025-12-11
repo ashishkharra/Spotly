@@ -5,8 +5,9 @@ module.exports.validate = (method) => {
   switch (method) {
     case 'adminLogin': {
       return [
-        body('email').notEmpty().withMessage('EMAIL_EMPTY'),
+        body('email').notEmpty().toLowerCase().trim().withMessage('EMAIL_EMPTY'),
         body('password').notEmpty().withMessage('PASSWORD_EMPTY'),
+        body('remember_me').optional().isBoolean().withMessage('INVALID_REMEMBER_ME'),
         validatorMiddleware
       ]
     }

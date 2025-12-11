@@ -149,7 +149,7 @@ module.exports.validate = (method) => {
       ]
     }
 
-    case 'page-data': {
+    case 'get_page_data': {
       return [
         query('page')
           .notEmpty()
@@ -157,6 +157,46 @@ module.exports.validate = (method) => {
           .isString()
           .withMessage('PAGE_NAME_INVALID')
           .trim(),
+
+        validatorMiddleware
+      ]
+    }
+
+    case 'home_data': {
+      return [
+        body("type").equals("hero"),
+        body("settings.title")
+          .isString()
+          .notEmpty().withMessage("HERO_SECTION_IS_REQUIRED"),
+        body("settings.subtitle")
+          .optional().isString(),
+        body("settings.backgroundImage")
+          .notEmpty().withMessage("HERO_BACKGROUND_IS_REQUIRED"),
+
+        body("type").equals("partners"),
+        body("settings.limit")
+          .optional()
+          .isInt({ min: 1 })
+          .withMessage("LIMIT_MUST_BE_NUMBER_BIGGER_THEN_0"),
+
+        body("type").equals("stats"),
+
+        body("settings.items")
+          .isArray({ min: 1 })
+          .withMessage("STATS_MUST_BE_ARRAY"),
+
+        body("settings.items.*.label")
+          .notEmpty().withMessage("STATS_MUST_HAVE_AT_LEAST_ONE_LABEL"),
+
+        body("settings.items.*.value")
+          .notEmpty().withMessage("STATS_MUST_HAVE_AT_LEAST_ONE_VALUE"),
+
+        body("type").equals("testimonials"),
+
+        body("settings.limit")
+          .optional()
+          .isInt({ min: 1 })
+          .withMessage("LIMIT_AT_LEAST_1"),
 
         validatorMiddleware
       ]

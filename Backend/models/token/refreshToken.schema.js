@@ -1,7 +1,17 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const refreshTokenSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    refPath: "userType"
+  },
+
+  userType: {
+    type: String,
+    required: true,
+    enum: ["User", "Admin", "Owner"]
+  },
 
   tokenHash: { type: String, required: true },
 
